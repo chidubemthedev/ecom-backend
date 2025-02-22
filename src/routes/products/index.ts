@@ -8,7 +8,11 @@ import {
 } from "./productController";
 import { validateData } from "@src/middlewares/validationMiddleware";
 import { z } from "zod";
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import {
+  createInsertSchema,
+  createSelectSchema,
+  createUpdateSchema,
+} from "drizzle-zod";
 import { productsTable } from "@db/products.schema";
 
 // export const createProductSchema = z.object({
@@ -19,6 +23,8 @@ import { productsTable } from "@db/products.schema";
 // });
 
 const createProductSchema = createInsertSchema(productsTable);
+const createGetProductSchema = createSelectSchema(productsTable);
+const updateProductSchema = createUpdateSchema(productsTable);
 
 const router = Router();
 
