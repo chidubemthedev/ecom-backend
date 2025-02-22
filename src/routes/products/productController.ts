@@ -71,8 +71,20 @@ export const updateProduct = async (req: Request, res: Response) => {
 };
 
 export const deleteProduct = async (req: Request, res: Response) => {
+  const { id } = req.params;
   try {
-    await db.select().from(productsTable).execute();
+    const product = await db
+      .delete(productsTable)
+      .where(eq(productsTable.id, Number(id)))
+      .returning();
+
+    if (product.length === 0) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res
+      .status(200)
+      .json({ message: "Product deleted successfully", data: product });
   } catch (error) {
     res.status(500).json({ error: error });
   }
