@@ -1,14 +1,7 @@
 import { Request, Response } from "express";
 import { db } from "@db/index";
-import { productsTable } from "@db/products.schema";
+import { Product, productsTable } from "@db/products.schema";
 import { eq } from "drizzle-orm";
-
-interface CreateProductRequest {
-  name: string;
-  description: string;
-  image: string;
-  price: number;
-}
 
 export const getProducts = async (req: Request, res: Response) => {
   try {
@@ -46,7 +39,7 @@ export const createProduct = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const { name, description, image, price }: CreateProductRequest = req.body;
+  const { name, description, image, price }: Product = req.body;
 
   if (!name || !description || !image || typeof price !== "number") {
     res.status(400).json({ error: "Invalid request data" });
@@ -75,7 +68,7 @@ export const updateProduct = async (
   res: Response
 ): Promise<void> => {
   const { id } = req.params;
-  const { name, description, image, price }: CreateProductRequest = req.body;
+  const { name, description, image, price }: Product = req.body;
 
   try {
     const product = await db
