@@ -1,3 +1,5 @@
+import { createProductSchema } from "@db/products.schema";
+import { validateData } from "@src/middlewares/validationMiddleware";
 import { Router } from "express";
 import {
   createProduct,
@@ -6,25 +8,6 @@ import {
   getProducts,
   updateProduct,
 } from "./productController";
-import { validateData } from "@src/middlewares/validationMiddleware";
-import { z } from "zod";
-import {
-  createInsertSchema,
-  createSelectSchema,
-  createUpdateSchema,
-} from "drizzle-zod";
-import { productsTable } from "@db/products.schema";
-
-// export const createProductSchema = z.object({
-//   name: z.string(),
-//   description: z.string().optional(),
-//   image: z.string().optional(),
-//   price: z.number(),
-// });
-
-const createProductSchema = createInsertSchema(productsTable);
-const createGetProductSchema = createSelectSchema(productsTable);
-const updateProductSchema = createUpdateSchema(productsTable);
 
 const router = Router();
 
