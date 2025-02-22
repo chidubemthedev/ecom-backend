@@ -19,7 +19,10 @@ export const getProducts = async (req: Request, res: Response) => {
   }
 };
 
-export const getProductById = async (req: Request, res: Response) => {
+export const getProductById = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const { id } = req.params;
 
   try {
@@ -29,7 +32,8 @@ export const getProductById = async (req: Request, res: Response) => {
       .where(eq(productsTable.id, Number(id)));
 
     if (product.length === 0) {
-      return res.status(404).json({ message: "Product not found" });
+      res.status(404).json({ message: "Product not found" });
+      return;
     }
 
     res.status(200).json(product);
@@ -38,11 +42,15 @@ export const getProductById = async (req: Request, res: Response) => {
   }
 };
 
-export const createProduct = async (req: Request, res: Response) => {
+export const createProduct = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const { name, description, image, price }: CreateProductRequest = req.body;
 
   if (!name || !description || !image || typeof price !== "number") {
-    return res.status(400).json({ error: "Invalid request data" });
+    res.status(400).json({ error: "Invalid request data" });
+    return;
   }
 
   try {
@@ -62,7 +70,10 @@ export const createProduct = async (req: Request, res: Response) => {
   }
 };
 
-export const updateProduct = async (req: Request, res: Response) => {
+export const updateProduct = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const { id } = req.params;
   const { name, description, image, price }: CreateProductRequest = req.body;
 
@@ -79,7 +90,8 @@ export const updateProduct = async (req: Request, res: Response) => {
       .returning();
 
     if (product.length === 0) {
-      return res.status(404).json({ message: "Product not found" });
+      res.status(404).json({ message: "Product not found" });
+      return;
     }
 
     res
@@ -90,7 +102,10 @@ export const updateProduct = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteProduct = async (req: Request, res: Response) => {
+export const deleteProduct = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const { id } = req.params;
   try {
     const product = await db
@@ -99,7 +114,8 @@ export const deleteProduct = async (req: Request, res: Response) => {
       .returning();
 
     if (product.length === 0) {
-      return res.status(404).json({ message: "Product not found" });
+      res.status(404).json({ message: "Product not found" });
+      return;
     }
 
     res

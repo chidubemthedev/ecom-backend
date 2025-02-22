@@ -1,5 +1,5 @@
 import express, { json, urlencoded } from "express";
-import router from "./routes/products";
+import productRoutes from "./routes/products";
 
 const port = 3000;
 
@@ -11,7 +11,7 @@ app.get("/", (req, res) => {
   res.send("Hello World!!!!");
 });
 
-app.use("/products", router);
+app.use("/products", productRoutes);
 
 app.listen(port, () => {
   console.log("Server is running on port 3000");
