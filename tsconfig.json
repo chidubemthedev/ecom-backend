@@ -15,7 +15,8 @@
     "baseUrl": ".", // Allow absolute imports relative to project root
     "paths": {
       "*": ["node_modules/*"],
-      "@db/*": ["src/db/*"] // Alias '@db' to 'src/db' directory
+      "@db/*": ["src/db/*"], // Alias '@db' to 'src/db' directory
+      "@src/*": ["src/*"] // Alias '@src' to 'src' directory
     }
   }
 }
