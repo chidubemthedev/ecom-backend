@@ -1,4 +1,8 @@
-import { createProductSchema } from "@db/products.schema";
+import {
+  createProductSchema,
+  paramsProductSchema,
+  updateProductSchema,
+} from "@db/products.schema";
 import { validateData } from "@src/middlewares/validationMiddleware";
 import { Router } from "express";
 import {
@@ -15,9 +19,13 @@ router.get("/", getProducts);
 
 router.get("/:id", getProductById);
 
-router.post("/", validateData(createProductSchema), createProduct);
+router.post("/", validateData({ body: createProductSchema }), createProduct);
 
-router.put("/:id", updateProduct);
+router.put(
+  "/:id",
+  validateData({ body: updateProductSchema, params: paramsProductSchema }),
+  updateProduct
+);
 
 router.delete("/:id", deleteProduct);
 

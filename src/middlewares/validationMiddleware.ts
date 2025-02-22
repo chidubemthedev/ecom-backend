@@ -1,25 +1,69 @@
 import { Request, Response, NextFunction } from "express";
 import { z, ZodError } from "zod";
 
-export function validateData(schema: z.Schema<any>) {
+// Define the validation options for multiple parts of the request
+interface ValidationSchemas {
+  body?: z.Schema<any>;
+  query?: z.Schema<any>;
+  params?: z.Schema<any>;
+}
+
+export function validateData(schemas: ValidationSchemas) {
   return (req: Request, res: Response, next: NextFunction): void => {
-    const result = schema.safeParse(req.body);
+    const errors: { field: string; message: string }[] = [];
 
-    if (!result.success) {
-      // Transform Zod error format into a readable array of messages
-      const errorMessages = result.error.errors.map((issue) => ({
-        field: issue.path.join("."), // Join nested paths if any
-        message: issue.message,
-      }));
+    // Validate each schema if provided
+    if (schemas.body) {
+      const result = schemas.body.safeParse(req.body);
+      if (!result.success) {
+        errors.push(
+          ...result.error.errors.map((issue) => ({
+            field: `body.${issue.path.join(".")}`,
+            message: issue.message,
+          }))
+        );
+      } else {
+        req.body = result.data; // Assign validated data
+      }
+    }
 
+    if (schemas.query) {
+      const result = schemas.query.safeParse(req.query);
+      if (!result.success) {
+        errors.push(
+          ...result.error.errors.map((issue) => ({
+            field: `query.${issue.path.join(".")}`,
+            message: issue.message,
+          }))
+        );
+      } else {
+        req.query = result.data;
+      }
+    }
+
+    if (schemas.params) {
+      const result = schemas.params.safeParse(req.params);
+      if (!result.success) {
+        errors.push(
+          ...result.error.errors.map((issue) => ({
+            field: `params.${issue.path.join(".")}`,
+            message: issue.message,
+          }))
+        );
+      } else {
+        req.params = result.data;
+      }
+    }
+
+    // If there are validation errors, return a response
+    if (errors.length > 0) {
       res.status(400).json({
         error: "Invalid data",
-        details: errorMessages, // Now an array of { field, message }
+        details: errors,
       });
       return;
     }
 
-    req.body = result.data; // Ensure only validated data is passed forward
     next();
   };
 }
