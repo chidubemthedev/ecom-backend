@@ -5,11 +5,7 @@ import {
   text,
   varchar,
 } from "drizzle-orm/pg-core";
-import {
-  createInsertSchema,
-  createSelectSchema,
-  createUpdateSchema,
-} from "drizzle-zod";
+import { createInsertSchema, createUpdateSchema } from "drizzle-zod";
 import { z } from "zod";
 
 export const productsTable = pgTable("products", {
@@ -23,7 +19,6 @@ export const productsTable = pgTable("products", {
 export type Product = typeof productsTable.$inferSelect;
 
 export const createProductSchema = createInsertSchema(productsTable);
-export const createGetProductSchema = createSelectSchema(productsTable);
 export const updateProductSchema = createUpdateSchema(productsTable);
 export const paramsProductSchema = z.object({
   id: z

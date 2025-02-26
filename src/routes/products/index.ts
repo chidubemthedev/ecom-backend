@@ -17,7 +17,11 @@ const router = Router();
 
 router.get("/", getProducts);
 
-router.get("/:id", getProductById);
+router.get(
+  "/:id",
+  validateData({ params: paramsProductSchema }),
+  getProductById
+);
 
 router.post("/", validateData({ body: createProductSchema }), createProduct);
 
@@ -27,6 +31,10 @@ router.put(
   updateProduct
 );
 
-router.delete("/:id", deleteProduct);
+router.delete(
+  "/:id",
+  validateData({ params: paramsProductSchema }),
+  deleteProduct
+);
 
 export default router;
