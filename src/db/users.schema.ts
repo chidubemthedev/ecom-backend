@@ -7,9 +7,11 @@ export const usersTable = pgTable("users", {
   password: varchar({ length: 255 }).notNull(),
   role: varchar({ length: 255 }).notNull().default("user"),
   name: varchar({ length: 255 }).notNull(),
-  address: text(),
+  address: text().notNull(),
 });
 
 export type User = typeof usersTable.$inferInsert;
 
-export const createUserSchema = createInsertSchema(usersTable);
+export const createUserSchema = createInsertSchema(usersTable).omit({
+  role: true,
+});
