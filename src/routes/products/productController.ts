@@ -41,10 +41,10 @@ export const createProduct = async (
 ): Promise<void> => {
   const { name, description, image, price }: Product = req.body;
 
-  if (!name || !description || !image || typeof price !== "number") {
-    res.status(400).json({ error: "Invalid request data" });
-    return;
-  }
+  // if (!name || !description || !image || typeof price !== "number") {
+  //   res.status(400).json({ error: "Invalid request data" });
+  //   return;
+  // }
 
   try {
     const [product] = await db

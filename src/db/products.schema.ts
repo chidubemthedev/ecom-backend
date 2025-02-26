@@ -29,11 +29,5 @@ export const paramsProductSchema = z.object({
   id: z
     .string()
     .regex(/^\d+$/, "ID must be a numeric string")
-    .transform(Number)
-    .optional(),
-  userId: z
-    .string()
-    .regex(/^\d+$/, "userId must be numeric")
-    .transform(Number)
-    .optional(),
+    .transform(Number),
 });
