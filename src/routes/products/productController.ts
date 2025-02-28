@@ -39,12 +39,9 @@ export const createProduct = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  const userId = req.userId;
   const { name, description, image, price }: Product = req.body;
-
-  // if (!name || !description || !image || typeof price !== "number") {
-  //   res.status(400).json({ error: "Invalid request data" });
-  //   return;
-  // }
+  console.log(userId);
 
   try {
     const [product] = await db

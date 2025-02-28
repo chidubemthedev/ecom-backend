@@ -12,7 +12,7 @@ import {
   getProducts,
   updateProduct,
 } from "./productController";
-import { verifyToken } from "@src/middlewares/authMiddleware";
+import { verifySeller, verifyToken } from "@src/middlewares/authMiddleware";
 
 const router = Router();
 
@@ -27,6 +27,7 @@ router.get(
 router.post(
   "/",
   verifyToken,
+  verifySeller,
   validateData({ body: createProductSchema }),
   createProduct
 );
