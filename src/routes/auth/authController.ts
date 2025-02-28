@@ -41,9 +41,9 @@ export const login = async (req: Request, res: Response) => {
     return;
   }
 
-  const hashedPassword = bcrypt.hashSync(password, 12);
+  const isMatch = bcrypt.compareSync(password, user.password);
 
-  if (user.password !== hashedPassword) {
+  if (!isMatch) {
     res.status(401).json({ error: "Authentication failed!" });
     return;
   }
