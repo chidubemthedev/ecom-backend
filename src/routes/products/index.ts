@@ -34,12 +34,16 @@ router.post(
 
 router.put(
   "/:id",
+  verifyToken,
+  verifySeller,
   validateData({ body: updateProductSchema, params: paramsProductSchema }),
   updateProduct
 );
 
 router.delete(
   "/:id",
+  verifyToken,
+  verifySeller,
   validateData({ params: paramsProductSchema }),
   deleteProduct
 );
