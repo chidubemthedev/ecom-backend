@@ -20,12 +20,39 @@ export const register = async (req: Request, res: Response) => {
     }
 
     const [user] = await db.insert(usersTable).values(data).returning();
-    res.status(201).json({ message: "User registered!", user });
+    //remove password from response
+    const userData = { ...user, password: undefined };
+    res.status(201).json({ message: "User registered!", user: userData });
   } catch (error) {
     res.status(500).json({ error: "Something went wrong!" });
   }
 };
 
-export const login = (req: Request, res: Response) => {
+export const login = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
+  const [user] = await db
+    .select()
+    .from(usersTable)
+    .where(eq(usersTable.email, email));
+
+  if (!user) {
+    res.status(401).json({ error: "Authentication failed!" });
+    return;
+  }
+
+  const hashedPassword = bcrypt.hashSync(password, 12);
+
+  if (user.password !== hashedPassword) {
+    res.status(401).json({ error: "Authentication failed!" });
+    return;
+  }
+
+  //   const token = jwt.sign({ email: user.email }, "secret", {
+  //     expiresIn: "1h",
+  //   });
+
+  //   res.status(200).json({ message: "Login successful!", token, user });
+
   res.sendStatus(200);
 };
