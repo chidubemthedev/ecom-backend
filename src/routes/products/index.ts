@@ -2,7 +2,7 @@ import {
   createProductSchema,
   paramsProductSchema,
   updateProductSchema,
-} from "@db/products.schema";
+} from "@db/products.schema.js";
 import { validateData } from "@src/middlewares/validationMiddleware.js";
 import { Router } from "express";
 import {
@@ -11,7 +11,7 @@ import {
   getProductById,
   getProducts,
   updateProduct,
-} from "./productController";
+} from "./productController.js";
 import { verifySeller, verifyToken } from "@src/middlewares/authMiddleware.js";
 
 const router = Router();
