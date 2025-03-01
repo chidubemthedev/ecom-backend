@@ -48,4 +48,4 @@ router.delete(
   deleteProduct
 );
 
-export default router;
+export const productRoutes = router;

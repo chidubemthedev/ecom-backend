@@ -9,4 +9,4 @@ router.post("/register", validateData({ body: createUserSchema }), register);
 
 router.post("/login", validateData({ body: loginUserSchema }), login);
 
-export default router;
+export const authRoutes = router;

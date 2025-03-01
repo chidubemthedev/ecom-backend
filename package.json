@@ -5,9 +5,10 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
+    "start": "node --env-file=.env dist/src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx --watch --env-file=.env src/index.ts",
-    "build": "tsup",
+    "build": "tsc",
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",

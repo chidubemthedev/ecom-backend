@@ -1,6 +1,6 @@
 import express, { json, urlencoded } from "express";
-import AuthRoutes from "./routes/auth";
-import productRoutes from "./routes/products";
+import { authRoutes } from "./routes/auth";
+import { productRoutes } from "./routes/products";
 
 const port = 3000;
 
@@ -12,7 +12,7 @@ app.get("/", (req, res) => {
   res.send("Hello World!!!!");
 });
 
-app.use("/auth", AuthRoutes);
+app.use("/auth", authRoutes);
 app.use("/products", productRoutes);
 
 app.listen(port, () => {
