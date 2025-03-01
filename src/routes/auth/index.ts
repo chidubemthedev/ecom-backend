@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { login, register } from "./authController";
-import { validateData } from "@src/middlewares/validationMiddleware";
+import { login, register } from "./authController.js";
+import { validateData } from "@src/middlewares/validationMiddleware.js";
 import { createUserSchema, loginUserSchema } from "@db/users.schema";
 
 const router = Router();

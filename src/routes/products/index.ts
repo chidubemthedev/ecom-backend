@@ -3,7 +3,7 @@ import {
   paramsProductSchema,
   updateProductSchema,
 } from "@db/products.schema";
-import { validateData } from "@src/middlewares/validationMiddleware";
+import { validateData } from "@src/middlewares/validationMiddleware.js";
 import { Router } from "express";
 import {
   createProduct,
@@ -12,7 +12,7 @@ import {
   getProducts,
   updateProduct,
 } from "./productController";
-import { verifySeller, verifyToken } from "@src/middlewares/authMiddleware";
+import { verifySeller, verifyToken } from "@src/middlewares/authMiddleware.js";
 
 const router = Router();
 
