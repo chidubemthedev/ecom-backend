@@ -36,3 +36,12 @@ export const createOrder = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Invalid order data!", error: error });
   }
 };
+
+export const getAllOrders = async (req: Request, res: Response) => {
+  try {
+    const orders = await db.select().from(ordersTable);
+    res.status(200).json({ message: "All orders", orders: orders });
+  } catch (error) {
+    res.status(500).json({ message: "Something went wrong!", error: error });
+  }
+};
